@@ -3,25 +3,27 @@ const ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 //css랑 같은 크기를 줘야함
-
 ctx.lineWidth = 2;
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-]
+let isPainting = false;
 
-function onClick(e) {
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
+function onMove(e) {
+    if (isPainting) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        return;
+    }
+    ctx.moveTo(e.offsetX, e.offsetY);
+}
+function startPainting() {
+    isPainting = true;
+    //console.log("마우스다운",startPainting)
+}
+function cancelPainting() {
+    isPainting = false;
+    //console.log("마우스업",cancelPainting)
 }
 
-canvas.addEventListener("mousemove", onClick);
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
