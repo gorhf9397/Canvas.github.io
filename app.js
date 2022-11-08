@@ -61,10 +61,10 @@ function onColorClick(e) {
 function onModeClick() {
   if (isFilling) {
     isFilling = false;
-    modeBtn.innerText = "그리기";
+    modeBtn.innerText = "🔪 그리기";
   } else {
     isFilling = true;
-    modeBtn.innerText = "채우기";
+    modeBtn.innerText = "🎨 채우기";
   }
 }
 function onCanvasClick() {
@@ -79,14 +79,14 @@ function onDestroyClick() {
 function onEraserClick(e) {
   ctx.strokeStyle = "white";
   isFilling = false;
-  modeBtn.innerText = "그리기";
+  modeBtn.innerText = "🔪 그리기";
 }
 function onFileChange(e) {
   // console.dir(e.target.files);
   const file = e.target.files[0];
   const url = URL.createObjectURL(file); // 업로드한 이미지를 URL로 변환
   //console.log(url);
-  const image = new Image(); //html 표기법 <img src=""/> 와 같음
+  const image = new Image(); //html 표기법 <img src=""/> or document.createElement("img") 와 같음 
   image.src = url;
   image.onload = function () {
     ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
