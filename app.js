@@ -1,3 +1,4 @@
+const textInput = document.querySelector("#text");
 const fileInput = document.querySelector("#file");
 const modeBtn = document.querySelector("#fill-btn");
 const destroyBtn = document.querySelector("#destroy-btn");
@@ -18,6 +19,7 @@ canvas.height = CANVAS_HEIGHT;
 
 //css랑 같은 크기를 줘야함
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
 
@@ -87,9 +89,21 @@ function onFileChange(e) {
   image.src = url;
   image.onload = function () {
     ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-                    //   좌표       넓이          높이
+    //   좌표       넓이          높이
     fileInput.value = null;
   };
+}
+function onDoubleClick(e) {
+  console.log("x좌표", e.offsetX, "y좌표", e.offsetY);
+  const text = textInput.value;
+  if (text !== "") {
+    ctx.save(); //현재상태,색상,스타일 등 을 저장
+    ctx.lineWidth = 1;
+    ctx.font = "48px serif";
+    ctx.fillText(text, e.offsetX, e.offsetY);
+    ctx.restore(); // 저장해놨던 것들을 저장해뒀던 버전으로 리턴
+    //console.log("실행중");
+  }
 }
 
 //그리기 부분
@@ -115,5 +129,8 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 
-//이미지컨트롤러
+//이미지 컨트롤러
 fileInput.addEventListener("change", onFileChange);
+
+//텍스트 컨트롤러
+canvas.addEventListener("dblclick", onDoubleClick);
