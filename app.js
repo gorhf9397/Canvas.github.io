@@ -1,3 +1,4 @@
+const saveBtn = document.querySelector("#save");
 const textInput = document.querySelector("#text");
 const fileInput = document.querySelector("#file");
 const modeBtn = document.querySelector("#fill-btn");
@@ -83,7 +84,7 @@ function onEraserClick(e) {
 function onFileChange(e) {
   // console.dir(e.target.files);
   const file = e.target.files[0];
-  const url = URL.createObjectURL(file);
+  const url = URL.createObjectURL(file); // 업로드한 이미지를 URL로 변환
   //console.log(url);
   const image = new Image(); //html 표기법 <img src=""/> 와 같음
   image.src = url;
@@ -104,6 +105,14 @@ function onDoubleClick(e) {
     ctx.restore(); // 저장해놨던 것들을 저장해뒀던 버전으로 리턴
     //console.log("실행중");
   }
+}
+function onSaveClick() {
+  const url = canvas.toDataURL();
+  // 다운로드 에 필요한 그림정보를 URL화 해서 다운로드
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "myImage.png";
+  a.click();
 }
 
 //그리기 부분
@@ -131,6 +140,7 @@ eraserBtn.addEventListener("click", onEraserClick);
 
 //이미지 컨트롤러
 fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
 
 //텍스트 컨트롤러
 canvas.addEventListener("dblclick", onDoubleClick);
