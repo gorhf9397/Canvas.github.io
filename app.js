@@ -1,5 +1,6 @@
 const saveBtn = document.querySelector("#save");
 const textInput = document.querySelector("#text");
+const fontSize = document.querySelector("#fontSize");
 const fileInput = document.querySelector("#file");
 const modeBtn = document.querySelector("#fill-btn");
 const destroyBtn = document.querySelector("#destroy-btn");
@@ -23,6 +24,7 @@ ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
+let isClicked = false;
 
 function onMove(e) {
   if (isPainting) {
@@ -97,13 +99,16 @@ function onFileChange(e) {
 function onDoubleClick(e) {
   console.log("x좌표", e.offsetX, "y좌표", e.offsetY);
   const text = textInput.value;
+  const size = fontSize.value;
+  
+  console.log(size);
   if (text !== "") {
     ctx.save(); //현재상태,색상,스타일 등 을 저장
     ctx.lineWidth = 1;
-    ctx.font = "48px serif";
+    ctx.font = `${size}px serif`;
     ctx.fillText(text, e.offsetX, e.offsetY);
     ctx.restore(); // 저장해놨던 것들을 저장해뒀던 버전으로 리턴
-    //console.log("실행중");
+    console.log(ctx.font);
   }
 }
 function onSaveClick() {
